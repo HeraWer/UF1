@@ -1,0 +1,37 @@
+package agenda;
+
+import java.util.*;
+
+public class TestHashMap {
+	public static void main(String[] args) {
+		String cod_banco;
+		Map bancos = new HashMap(); // DECLARAMOS EL HASHMAP
+		
+		System.out.println("Esta vacio el HashMap?");
+		System.out.println(bancos.isEmpty());
+		
+		bancos.put("1827", "BBVA"); // AÑADIR KEY Y VALUE AL HASHMAP
+		bancos.put("0049", "Santander"); // AÑADIR KEY Y VALUE AL HASHMAP
+		bancos.put("2038", "Bankia"); // AÑADIR KEY Y VALUE AL HASHMAP
+		bancos.put("2100", "La Caixa"); // AÑADIR KEY Y VALUE AL HASHMAP
+		
+		System.out.println("Ahora hay datos en el HashMap");
+		System.out.println(bancos.isEmpty());
+		
+		System.out.println("Mostramos los " + bancos.size() + " que tenemos");
+		
+		Iterator it = bancos.keySet().iterator(); // CREAR ITERADOR PARA MOSTRARLO
+		System.out.println(bancos.size());
+		while (it.hasNext()) { // MANERA DE MOSTRAR
+			cod_banco = (String) it.next();
+			System.out.println(cod_banco + ": " + bancos.get(cod_banco));
+
+		}
+		
+		System.out.println("Añadimos un dato mas");
+		bancos.put("0000", "Penedes");
+		
+		bancos.forEach((k, v) -> System.out.println("Clave: " k + "Valor: " + v));
+
+	}
+}

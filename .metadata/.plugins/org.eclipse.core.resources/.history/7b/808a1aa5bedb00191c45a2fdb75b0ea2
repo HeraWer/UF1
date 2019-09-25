@@ -1,0 +1,22 @@
+package agenda;
+
+import java.util.*;
+
+public class TestHashMap {
+	public static void main(String[] args) {
+		String cod_banco;
+		Map bancos = new HashMap(); // DECLARAMOS EL HASHMAP
+		bancos.put("1827", "BBVA"); // AÑADIR KEY Y VALUE AL HASHMAP
+		bancos.put("0049", "Santander"); // AÑADIR KEY Y VALUE AL HASHMAP
+		bancos.put("2038", "Bankia"); // AÑADIR KEY Y VALUE AL HASHMAP
+		bancos.put("2100", "La Caixa"); // AÑADIR KEY Y VALUE AL HASHMAP
+		Iterator it = bancos.keySet().iterator(); // CREAR ITERADOR PARA MOSTRARLO
+		System.out.println(bancos.size());
+		while (it.hasNext()) { // MANERA DE MOSTRAR
+			cod_banco = (String) it.next();
+			System.out.println(cod_banco + ": " + bancos.get(cod_banco));
+
+		}
+
+	}
+}

@@ -1,0 +1,44 @@
+package botiga;
+
+import java.util.Scanner;
+import java.util.TreeMap;
+
+public class Botiga {
+
+	private TreeMap<String, Float> juegos = new TreeMap<String, Float>(String.CASE_INSENSITIVE_ORDER);
+	static Scanner lector = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Botiga b = new Botiga();
+		b.menu();
+
+	}
+
+	public void menu() {
+
+		System.out.println("Elige una opción");
+		System.out.println("1- Introduce un juego");
+		System.out.println("2- Modifica el precio");
+		System.out.println("3- Elimnar producto");
+		System.out.println("4- Mostrar todos los juegos alfabeticamente");
+		System.out.println("5- Salir");
+		opcion();
+
+	}
+
+	public static void opcion() {
+		
+		boolean correcto = true;
+		while (correcto) {
+			int opcion = lector.nextInt();
+			if (opcion > 0 && opcion < 6) {
+				correcto = false;
+			} else {
+				System.out.println("La opcion selecciona no esta en ninguna de las opciones");
+			}
+		}
+	}
+
+}

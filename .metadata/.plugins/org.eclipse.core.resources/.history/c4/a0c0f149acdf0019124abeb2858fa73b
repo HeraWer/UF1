@@ -1,0 +1,10 @@
+package leer_ficheros;
+
+public class Leyendo_ficheros {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

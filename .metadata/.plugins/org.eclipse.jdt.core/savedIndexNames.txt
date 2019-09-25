@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+C:\Users\vcjon\Desktop\AMS2\M6_Acceso_a_datos\UF1\.metadata\.plugins\org.eclipse.jdt.core
+2354271655.index
+2257068970.index
