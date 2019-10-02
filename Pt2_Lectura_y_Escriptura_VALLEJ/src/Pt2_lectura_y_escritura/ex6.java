@@ -25,7 +25,7 @@ public class ex6 {
 
 }
 
-// APUNTES PROPIOS
+// APUNTES PROPIOS PARA QUE EL USUARIO NO ENTRE ESPACIOS EN BLANCO
 
 /* String frase = lector.nextLine();
 	while(frase.equals(""){
