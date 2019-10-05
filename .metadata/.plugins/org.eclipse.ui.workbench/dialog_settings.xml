@@ -24,6 +24,7 @@
 		<item value="true" key="WizardZipFileResourceExportPage1.STORE_COMPRESS_CONTENTS_ID"/>
 		<item value="true" key="WizardZipFileResourceExportPage1.STORE_CREATE_STRUCTURE_ID"/>
 		<list key="WizardZipFileResourceExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="C:\Users\vcjon\Desktop\AMS2\M6_Acceso_a_datos\UF1\Pt3_Fichero_Binario_VALLEJ.zip"/>
 			<item value="C:\Users\vcjon\Desktop\AMS2\M6_Acceso_a_datos\UF1\Pt1_Maps_VALLEJ.zip"/>
 			<item value="C:\Users\vcjon\Desktop\AMS2\M6_Acceso_a_datos\UF1\Agenda_Hashmap_VALLEJ.zip"/>
 		</list>
