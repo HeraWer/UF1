@@ -7,6 +7,18 @@ public class Modul {
 	private String nom;
 	private String profe;
 	private ArrayList<Object> ufs;
+	
+	public void printUFs() {
+		
+	}
+	
+	public void printModul() {
+		
+	}
+	
+	public void setModul(String id) {
+		
+	}
 
 	public String getNom() {
 		return nom;
