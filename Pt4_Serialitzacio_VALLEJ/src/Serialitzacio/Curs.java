@@ -1,12 +1,13 @@
 package Serialitzacio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Curs extends Modul{
+public class Curs implements Serializable{
 
 	private String tutor;
-	private ArrayList<String> alumnes;
+	private ArrayList alumnes;
 	private HashMap moduls;
 	
 	
@@ -33,12 +34,12 @@ public class Curs extends Modul{
 	}
 
 
-	public ArrayList<String> getAlumnes() {
+	public ArrayList getAlumnes() {
 		return alumnes;
 	}
 
 
-	public void setAlumnes(ArrayList<String> alumnes) {
+	public void setAlumnes(ArrayList alumnes) {
 		this.alumnes = alumnes;
 	}
 
