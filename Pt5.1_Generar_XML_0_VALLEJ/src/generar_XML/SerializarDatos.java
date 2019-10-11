@@ -20,6 +20,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 public class SerializarDatos {
@@ -57,6 +59,35 @@ public class SerializarDatos {
 			salida.writeObject(p);
 			crearXML();
 
+			File f = new File("myPeople.xml"); // HACEMOS REFERENCIA AL FICHERO XML CON EL FILE
+
+			try {
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();  
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.parse(f);
+
+				NodeList nList = doc.getElementsByTagName("Persona");
+				System.out.println("Numero de personas: " + nList.getLength());
+
+				for (int temp = 0; temp < nList.getLength(); temp++) { // HAGO UN FOR PARA RECORRER EL ARCHIVO XML CON LA LONGITUD DE LA ETIQUETA PERSONA
+					Node nNode = nList.item(temp);
+
+					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+						Element eElement = (Element) nNode;
+
+						System.out.println("\nPersona: ");
+						System.out
+								.println("Nombre: " + eElement.getElementsByTagName("Nombre").item(0).getTextContent());
+						System.out.println(
+								"Apellido: " + eElement.getElementsByTagName("Apellido").item(0).getTextContent());
+						System.out.println("Edad: " + eElement.getElementsByTagName("Edad").item(0).getTextContent());
+					}
+
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} catch (FileNotFoundException e) {
 			System.out.println("1" + e.getMessage());
 		} catch (IOException e) {
@@ -82,7 +113,8 @@ public class SerializarDatos {
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			DOMImplementation implementation = builder.getDOMImplementation();
 
-			Document ficheroXML = implementation.createDocument(null, "Personas", null); // EL ELEMENTO RAIZ DEL DOCUMENTO ES Persona
+			Document ficheroXML = implementation.createDocument(null, "Personas", null); // EL ELEMENTO RAIZ DEL
+																							// DOCUMENTO ES Persona
 			ficheroXML.setXmlVersion("1.0");
 
 			Element raiz = ficheroXML.getDocumentElement();
@@ -100,18 +132,31 @@ public class SerializarDatos {
 					Element persona = ficheroXML.createElement("Persona"); // CREO UNA ETIQUETA PERSONA PARA CADA UNA DE
 																			// LAS PERSONAS
 
-					Element nombrePersona = ficheroXML.createElement("Nombre"); // CREO UNA ETIQUETA NOMBRE PARA CADA NOMBRE DE LA PERSONA
-					Text textoNombrePersona = ficheroXML.createTextNode(p.getNombre()); // GENERO EL TEXTO DE LA ETIQUETA NOMBRE LEYENDO EL NOMBRE DEL FICHERO
+					Element nombrePersona = ficheroXML.createElement("Nombre"); // CREO UNA ETIQUETA NOMBRE PARA CADA
+																				// NOMBRE DE LA PERSONA
+					Text textoNombrePersona = ficheroXML.createTextNode(p.getNombre()); // GENERO EL TEXTO DE LA
+																						// ETIQUETA NOMBRE LEYENDO EL
+																						// NOMBRE DEL FICHERO
 					nombrePersona.appendChild(textoNombrePersona); // INSERTO EL TEXTO EN LA ETIQUETA nombrePersona
 					persona.appendChild(nombrePersona); // INSERTO LA ETIQUETA nombrePersona EN LA ETIQUETA Persona
 
-					Element apellidoPersona = ficheroXML.createElement("Apellido"); // CREO NA ETIQUETA APELLIDO PARA CADA APELLIDO DE LA PERSONA
-					Text textoApellidoPersona = ficheroXML.createTextNode(p.getApellido()); // GENERO EL TEXTO DE LA ETIQUETA APELLIDO LEYENDO EL APELLIDO DEL FICHERO
-					apellidoPersona.appendChild(textoApellidoPersona); // INSERTO EL TEXTO EN LA ETIQUETA apellidoPersona
+					Element apellidoPersona = ficheroXML.createElement("Apellido"); // CREO NA ETIQUETA APELLIDO PARA
+																					// CADA APELLIDO DE LA PERSONA
+					Text textoApellidoPersona = ficheroXML.createTextNode(p.getApellido()); // GENERO EL TEXTO DE LA
+																							// ETIQUETA APELLIDO LEYENDO
+																							// EL APELLIDO DEL FICHERO
+					apellidoPersona.appendChild(textoApellidoPersona); // INSERTO EL TEXTO EN LA ETIQUETA
+																		// apellidoPersona
 					persona.appendChild(apellidoPersona); // INSERTO LA ETIQUETA apellidoPersona EN LA ETIQUETA Persona
 
-					Element edadPersona = ficheroXML.createElement("Edad"); // CREO UNA ETIQUETA EDAD PARA CADA EDAD DE LA PERSONA
-					Text textoEdadPersona = ficheroXML.createTextNode(Integer.toString(p.getEdad())); // GENERO EL TEXTO DE LA ETIQUETA EDAD LEYENDO LA EDAD DEL FICHERO
+					Element edadPersona = ficheroXML.createElement("Edad"); // CREO UNA ETIQUETA EDAD PARA CADA EDAD DE
+																			// LA PERSONA
+					Text textoEdadPersona = ficheroXML.createTextNode(Integer.toString(p.getEdad())); // GENERO EL TEXTO
+																										// DE LA
+																										// ETIQUETA EDAD
+																										// LEYENDO LA
+																										// EDAD DEL
+																										// FICHERO
 					edadPersona.appendChild(textoEdadPersona); // INSERTO EL TEXTO EN LA ETIQUETA edadPersona
 					persona.appendChild(edadPersona); // INSERTO LA ETIQUETA edadPersona en la etiqueta Persona
 
@@ -119,12 +164,12 @@ public class SerializarDatos {
 				}
 
 			} catch (Exception e) {
-				ficheroXML.normalizeDocument(); //Esto no se si deberia generar la estructura de arbol
-	               
-                Source source = new DOMSource(ficheroXML);
-                Result result = new StreamResult(new java.io.File("myPeople.xml"));
-                Transformer transformer = TransformerFactory.newInstance().newTransformer();
-                transformer.transform(source, result);
+				ficheroXML.normalizeDocument(); // Esto no se si deberia generar la estructura de arbol
+
+				Source source = new DOMSource(ficheroXML);
+				Result result = new StreamResult(new java.io.File("myPeople.xml"));
+				Transformer transformer = TransformerFactory.newInstance().newTransformer();
+				transformer.transform(source, result);
 			}
 
 		} catch (Exception e) {
