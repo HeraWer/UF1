@@ -1,20 +1,16 @@
 package generar_xml;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Scanner;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
@@ -34,7 +30,7 @@ public class Curso_XML {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.newDocument();
-			Document docA = dBuilder.parse(new File("cursos.xml"));
+			
 
 			while (comprobacionM) {
 
@@ -47,57 +43,13 @@ public class Curso_XML {
 				int opcion = scan.nextInt();
 				if (opcion > 0 && opcion < 5) {
 					if (opcion == 1) {
-						System.out.println("Dime el nombre del curso donde tengo que añadir el alumno");
-						String nCurso = lector.nextLine();
-						System.out.println("Dime el nombre del alumno que quieres añadir");
-						String nNombre = lector.nextLine();
-
-						NodeList nodoCiclo = docA.getElementsByTagName("Ciclo");
-
-						for (int i = 0; i < nodoCiclo.getLength(); i++) {
-							Element element = (Element) nodoCiclo.item(i);
-							if (element.getAttribute("Nombre").equals(nCurso)) {
-								NodeList nLAlumno = docA.getElementsByTagName("Alumnos");
-								Element nuevoAlumno = docA.createElement("Alumno");
-								nuevoAlumno.appendChild(docA.createTextNode(nNombre));
-								nLAlumno.item(i).appendChild(nuevoAlumno);
-							}
-						}
-
-						TransformerFactory tFactory = TransformerFactory.newInstance();
-						Transformer transformer = tFactory.newTransformer();
-						DOMSource source = new DOMSource(docA);
-						StreamResult sResult = new StreamResult(new File("cursos.xml"));
-						transformer.transform(source, sResult);
-
+						añadirAlumnoFicheroExistente();
 					}
 					if (opcion == 2) {
-						System.out.println("Dime el nombre del curso donde tengo que eliminar el alumno");
-						String nCurso = lector.nextLine();
-						System.out.println("Dime el nombre del alumno que quieres eliminar");
-						String nNombre = lector.nextLine();
-
-						NodeList nodoCiclo = docA.getElementsByTagName("Ciclo");
-						NodeList nodoAlumno = docA.getElementsByTagName("Alumno");
-
-						for (int i = 0; i < nodoCiclo.getLength(); i++) {
-							Element element = (Element) nodoCiclo.item(i);
-							if (element.getAttribute("Nombre").equals(nCurso)) {
-								for (int k = 0; k < nodoAlumno.getLength(); k++) {
-									Element elementA = (Element) nodoAlumno.item(k);
-									if (element.getTextContent().equals(nNombre)) {
-										Element padre = (Element) elementA.getParentNode();
-										padre.removeChild(elementA);
-									}
-								}
-							}
-						}
-
-						TransformerFactory tFactory = TransformerFactory.newInstance();
-						Transformer transformer = tFactory.newTransformer();
-						DOMSource source = new DOMSource(docA);
-						StreamResult sResult = new StreamResult(new File("cursos.xml"));
-						transformer.transform(source, sResult);
+						eliminarAlumnoFicheroExistente();
+					}
+					if (opcion == 3) {
+						comprobacionM = false;
 					}
 					if (opcion == 4) {
 						comprobacionC = false;
@@ -108,14 +60,17 @@ public class Curso_XML {
 				}
 			}
 
-			System.out.println("Vamos a introducir los datos de un curso.\n" + "- Nombre de curso\n" + "- Tutor\n"
-					+ "- Alumnos\n" + "- Modulos\n" + "- Unidades formatias");
+			
 
 			// ELEMENTO RAIZ DE TODO EL XML.
 			Element eRaiz = doc.createElement("IES_Esteve_Terrades");
 			doc.appendChild(eRaiz);
 
 			while (comprobacionC) { // WHILE PARA INGRESAR UN NUEVO CURSO
+				
+				System.out.println("Vamos a introducir los datos de un curso.\n" + "- Nombre de curso\n" + "- Tutor\n"
+						+ "- Alumnos\n" + "- Modulos\n" + "- Unidades formatias");
+				
 				// ELEMENTO CICLOS DONDE ENGLORABARA LOS DISTINTOS CICLOS.
 				Element tCiclos = doc.createElement("Ciclos");
 				eRaiz.appendChild(tCiclos);
@@ -316,5 +271,92 @@ public class Curso_XML {
 			}
 		} while (!nUF.equalsIgnoreCase("-1"));
 	}
+	
+	public static void añadirAlumnoFicheroExistente() {
+		
+		try {
+			
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+		Document docA = dBuilder.parse(new File("cursos.xml"));
+		
+		// Pedimos los datos del curso donde quiere eliminar el alumno y el nombre del alumno
+		System.out.println("Dime el nombre del curso donde tengo que añadir el alumno");
+		String nCurso = lector.nextLine();
+		System.out.println("Dime el nombre del alumno que quieres añadir");
+		String nNombre = lector.nextLine();
 
+		// Hacemos una lista de las etiquetas Ciclo
+		NodeList nodoCiclo = docA.getElementsByTagName("Ciclo");
+
+		// Hacemos un for para que almacene todos los ciclos que encuentre
+		for (int i = 0; i < nodoCiclo.getLength(); i++) {
+			Element element = (Element) nodoCiclo.item(i);
+			
+			// Creamos un if para que entre solo en el Ciclo que contenta el atributo que puso el usuario
+			if (element.getAttribute("Nombre").equals(nCurso)) {
+				
+				// Una vez encontrado creamos otra lista donde ponemos la etiqueta Alumnos que engloba a los alumnos y añadiremos el alumno dentro del nodo
+				NodeList nLAlumno = docA.getElementsByTagName("Alumnos");
+				Element nuevoAlumno = docA.createElement("Alumno");
+				nuevoAlumno.appendChild(docA.createTextNode(nNombre));
+				nLAlumno.item(i).appendChild(nuevoAlumno);
+			}
+		}
+
+		TransformerFactory tFactory = TransformerFactory.newInstance();
+		Transformer transformer = tFactory.newTransformer();
+		DOMSource source = new DOMSource(docA);
+		StreamResult sResult = new StreamResult(new File("cursos.xml"));
+		transformer.transform(source, sResult);
+		
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void eliminarAlumnoFicheroExistente() {
+		
+		try {
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+		Document docA = dBuilder.parse(new File("cursos.xml"));
+		
+		// Pedimos los datos para buscar el curso y el alumno que se quiere eliminar
+		System.out.println("Dime el nombre del curso donde tengo que eliminar el alumno");
+		String nCurso = lector.nextLine();
+		System.out.println("Dime el nombre del alumno que quieres eliminar");
+		String nNombre = lector.nextLine();
+
+		// Creo dos nodos para buscar el ciclo y el alumno que quiero eliminar
+		NodeList nodoCiclo = docA.getElementsByTagName("Ciclo");
+		NodeList nodoAlumno = docA.getElementsByTagName("Alumno");
+
+		// Hago un for para buscar el ciclo
+		for (int i = 0; i < nodoCiclo.getLength(); i++) {
+			Element element = (Element) nodoCiclo.item(i);
+			if (element.getAttribute("Nombre").equals(nCurso)) {
+				//Una vez encontrado hago otro for donde encontrare el alumno a eliminar
+				for (int j = 0; j < nodoAlumno.getLength(); j++) {
+					if (nodoAlumno.item(j).getTextContent().equals(nNombre)) {
+						nodoAlumno.item(j).getParentNode().removeChild(nodoAlumno.item(j));
+						break;
+					}
+				}
+				break;
+			}
+		}
+
+		TransformerFactory tFactory = TransformerFactory.newInstance();
+		Transformer transformer = tFactory.newTransformer();
+		DOMSource source = new DOMSource(docA);
+		StreamResult sResult = new StreamResult(new File("cursos.xml"));
+		
+		transformer.transform(source, sResult);
+		
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+	}
 }
