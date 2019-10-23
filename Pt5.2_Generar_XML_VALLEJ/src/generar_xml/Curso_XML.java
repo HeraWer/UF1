@@ -14,6 +14,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 public class Curso_XML {
@@ -23,14 +25,88 @@ public class Curso_XML {
 	static Modulo m = new Modulo();
 
 	public static void main(String[] args) {
-
+		Scanner scan = new Scanner(System.in);
 		boolean comprobacionC = true;
+		boolean comprobacionM = true;
 
 		try {
 
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.newDocument();
+			Document docA = dBuilder.parse(new File("cursos.xml"));
+
+			while (comprobacionM) {
+
+				System.out.println("===================== MENU ===================");
+				System.out.println("1 - Modificar un alumno");
+				System.out.println("2 - Eliminar alumno");
+				System.out.println("3 - Crear nuevo curso");
+				System.out.println("4 - Salir");
+
+				int opcion = scan.nextInt();
+				if (opcion > 0 && opcion < 5) {
+					if (opcion == 1) {
+						System.out.println("Dime el nombre del curso donde tengo que añadir el alumno");
+						String nCurso = lector.nextLine();
+						System.out.println("Dime el nombre del alumno que quieres añadir");
+						String nNombre = lector.nextLine();
+
+						NodeList nodoCiclo = docA.getElementsByTagName("Ciclo");
+
+						for (int i = 0; i < nodoCiclo.getLength(); i++) {
+							Element element = (Element) nodoCiclo.item(i);
+							if (element.getAttribute("Nombre").equals(nCurso)) {
+								NodeList nLAlumno = docA.getElementsByTagName("Alumnos");
+								Element nuevoAlumno = docA.createElement("Alumno");
+								nuevoAlumno.appendChild(docA.createTextNode(nNombre));
+								nLAlumno.item(i).appendChild(nuevoAlumno);
+							}
+						}
+
+						TransformerFactory tFactory = TransformerFactory.newInstance();
+						Transformer transformer = tFactory.newTransformer();
+						DOMSource source = new DOMSource(docA);
+						StreamResult sResult = new StreamResult(new File("cursos.xml"));
+						transformer.transform(source, sResult);
+
+					}
+					if (opcion == 2) {
+						System.out.println("Dime el nombre del curso donde tengo que eliminar el alumno");
+						String nCurso = lector.nextLine();
+						System.out.println("Dime el nombre del alumno que quieres eliminar");
+						String nNombre = lector.nextLine();
+
+						NodeList nodoCiclo = docA.getElementsByTagName("Ciclo");
+						NodeList nodoAlumno = docA.getElementsByTagName("Alumno");
+
+						for (int i = 0; i < nodoCiclo.getLength(); i++) {
+							Element element = (Element) nodoCiclo.item(i);
+							if (element.getAttribute("Nombre").equals(nCurso)) {
+								for (int k = 0; k < nodoAlumno.getLength(); k++) {
+									Element elementA = (Element) nodoAlumno.item(k);
+									if (element.getTextContent().equals(nNombre)) {
+										Element padre = (Element) elementA.getParentNode();
+										padre.removeChild(elementA);
+									}
+								}
+							}
+						}
+
+						TransformerFactory tFactory = TransformerFactory.newInstance();
+						Transformer transformer = tFactory.newTransformer();
+						DOMSource source = new DOMSource(docA);
+						StreamResult sResult = new StreamResult(new File("cursos.xml"));
+						transformer.transform(source, sResult);
+					}
+					if (opcion == 4) {
+						comprobacionC = false;
+						comprobacionM = false;
+					}
+				} else {
+					System.out.println("No has seleccionado ninguna de las opcion ya que te saliste del rango");
+				}
+			}
 
 			System.out.println("Vamos a introducir los datos de un curso.\n" + "- Nombre de curso\n" + "- Tutor\n"
 					+ "- Alumnos\n" + "- Modulos\n" + "- Unidades formatias");
