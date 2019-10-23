@@ -35,7 +35,7 @@ public class Curso_XML {
 			while (comprobacionM) {
 
 				System.out.println("===================== MENU ===================");
-				System.out.println("1 - Modificar un alumno");
+				System.out.println("1 - Añador un alumno");
 				System.out.println("2 - Eliminar alumno");
 				System.out.println("3 - Crear nuevo curso");
 				System.out.println("4 - Salir");
