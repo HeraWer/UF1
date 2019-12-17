@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="WorkbenchPreferenceDialogSettings">
+		<item value="374" key="DIALOG_X_ORIGIN"/>
+		<item value="8" key="DIALOG_Y_ORIGIN"/>
+	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
 		<item value="-1" key="dialogHeight"/>
 		<item value="-1" key="dialogWidth"/>
@@ -24,6 +28,7 @@
 		<item value="true" key="WizardZipFileResourceExportPage1.STORE_COMPRESS_CONTENTS_ID"/>
 		<item value="true" key="WizardZipFileResourceExportPage1.STORE_CREATE_STRUCTURE_ID"/>
 		<list key="WizardZipFileResourceExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="C:\Users\vcjon\Desktop\AMS2\M6_Acceso_a_datos\UF1\EXAMEN_UF1_VALLEJ_.zip"/>
 			<item value="C:\Users\vcjon\Desktop\AMS2\M6_Acceso_a_datos\UF1\Pt5_2_Generar_XML_VALLEJ.zip"/>
 			<item value="C:\Users\vcjon\Desktop\AMS2\M6_Acceso_a_datos\UF1\Pt5_Generar_XML_0_VALLEJ.zip"/>
 			<item value="C:\Users\vcjon\Desktop\AMS2\M6_Acceso_a_datos\UF1\Pt3_Fichero_Binario_VALLEJ.zip"/>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><Videoconsolas>
+	<XboxOne>
+		<Juegos>
+			<Juego>Red Dead Redemption 2</Juego>
+		</Juegos>
+	</XboxOne>
+	<PlayStation4>
+		<Juegos>
+			<Juego>Shadow of the Colossus</Juego>
+		</Juegos>
+		<Juegos>
+			<Juego>The last of us 2</Juego>
+		</Juegos>
+	<Juegos><Juego>The last of us 2</Juego></Juegos></PlayStation4>
+</Videoconsolas>
